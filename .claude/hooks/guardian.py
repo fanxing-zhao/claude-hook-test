@@ -38,7 +38,7 @@ RULES = [
         "name": "版本库审计 (VCS Protection)",
         "level": "WARNING",
         "patterns": [
-            r"git\s+push\s+(--force|-f)",         
+            r"git\s+push",         
             r"git\s+branch\s+-D"
         ],
         "reason": "禁止强制覆盖 Git 历史。"
