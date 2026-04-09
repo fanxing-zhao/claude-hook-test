@@ -53,9 +53,13 @@ def main():
             
         payload = json.loads(payload_data)
         
-        # 【核心补丁】提取工具名称，并将所有的工具输入（不论是 command 还是 path）转换为文本扫描！
-        tool_name = payload.get("tool", "Unknown")
+        # 提取工具输入并转为字符串进行全量扫描
+        # 兼容不同协议版本的底层框架字段名
+        tool_name = payload.get("tool_name") or payload.get("name") or payload.get("tool") or "Unknown"
         tool_input = payload.get("tool_input", {})
+        # 有些框架会把参数直接放在 input 字段里
+        if not tool_input:
+             tool_input = payload.get("input", {})
         action_payload = json.dumps(tool_input, ensure_ascii=False)
 
         # 遍历引擎
